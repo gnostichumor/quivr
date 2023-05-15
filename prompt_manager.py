@@ -1,3 +1,4 @@
+import re
 import streamlit as st
 from supabase import Client, create_client
 
@@ -80,6 +81,14 @@ def get_prompt_from_title(prompt_title, db_client):
         return response.data[0]["prompt"]
     else:
         return "Prompt not found"
+    
+def find_input_variables(text):
+    # Define a regular expression pattern to match variables enclosed in curly braces
+    pattern = r'{([^{}]*)}'
+    # Use the findall() method to find all instances of the pattern in the text
+    matches = re.findall(pattern, text)
+    # Return the list of matches
+    return matches
 
 
 def manage_prompts(db_client):
